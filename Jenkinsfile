@@ -1,36 +1,45 @@
 pipeline {
     agent any
 
-    environment {
-        NODE_ENV = 'test'
-    }
-
     stages {
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                script {
+                    withNodejs('NodeJS 18') {
+                        sh 'npm install'
+                    }
+                }
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'npm test'
+                script {
+                    withNodejs('NodeJS 18') {
+                        sh 'npm test'
+                    }
+                }
             }
         }
 
         stage('Lint') {
             steps {
-                sh 'npm run lint || true'
+                script {
+                    withNodejs('NodeJS 18') {
+                        sh 'npm run lint'
+                    }
+                }
             }
         }
     }
 
     post {
-        success {
-            echo '✅ Tests passed!'
-        }
         failure {
             echo '❌ Build failed!'
         }
+        success {
+            echo '✅ Build succeeded!'
+        }
     }
 }
+
