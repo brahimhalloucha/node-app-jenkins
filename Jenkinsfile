@@ -5,10 +5,6 @@ pipeline {
         NODE_ENV = 'test'
     }
 
-    tools {
-        nodejs "NodeJS 18" // Make sure this is configured under "Global Tool Configuration"
-    }
-
     stages {
         stage('Install Dependencies') {
             steps {
